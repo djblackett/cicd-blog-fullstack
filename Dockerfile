@@ -22,12 +22,13 @@ RUN apt-get update -qq && \
 
 # Install node modules
 COPY --link package-lock.json package.json ./
-RUN npm ci
+RUN npm ci --include=dev
 
 # Copy application code
 COPY --link . .
 RUN npm run build
 
+RUN npm prune --omit=dev
 
 # Final stage for app image
 FROM base
