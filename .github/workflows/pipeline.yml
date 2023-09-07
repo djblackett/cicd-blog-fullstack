@@ -23,6 +23,8 @@ jobs:
         run: npm ci
       - name: Check style
         run: npm run lint
+#      - name: Check style - Frontend    ** this won't help
+#        run: cd bloglist-frontend && npm run lint && cd ../
       - name: Build
         run: npm run build
       - name: Run tests
