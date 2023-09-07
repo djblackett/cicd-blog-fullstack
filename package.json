@@ -12,7 +12,7 @@
     "logs:prod": "flyctl logs",
     "lint": "eslint .",
     "fix": "eslint . --fix",
-    "test": "cross-env NODE_ENV=test jest --verbose --runInBand --forceExit",
+    "test": "cross-env NODE_ENV=test jest --verbose --runInBand --forceExit --detectOpenHandles",
     "start:test": "cross-env NODE_ENV=test nodemon index.js"
   },
   "author": "David Andrea",
