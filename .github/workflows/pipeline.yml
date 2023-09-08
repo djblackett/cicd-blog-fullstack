@@ -12,40 +12,40 @@ on:
     types: [ opened, synchronize ]
 
 jobs:
-  simple_deployment_pipeline:
-    runs-on: ubuntu-20.04
-    env:
-      TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
-      NODE_ENV: "test"
-      SECRET: ${{ secrets.SECRET }}
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-      - name: Install dependencies
-        run: npm ci --legacy-peer-deps
-      - name: Install frontend testing dependencies
-        working-directory: bloglist-frontend
-        run: npm install
-      - name: Check style
-        run: npm run lint
-      - name: Build
-        run: npm run build
-      - name: Dom tests
-        working-directory: bloglist-frontend
-        run: npm run test
-      - name: Run tests
-        run: npm run test
-      - name: debug print statements
-        run: ls && cd node_modules && ls
-      - name: e2e tests
-        uses: cypress-io/github-action@v6
-        with:
-          build: npm run build
-          start: npm run start:test
-          command: cypress run
-          wait-on: http://0.0.0.0:3000
+#  simple_deployment_pipeline:
+#    runs-on: ubuntu-20.04
+#    env:
+#      TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
+#      NODE_ENV: "test"
+#      SECRET: ${{ secrets.SECRET }}
+#    steps:
+#      - uses: actions/checkout@v3
+#      - uses: actions/setup-node@v3
+#        with:
+#          node-version: '16'
+#      - name: Install dependencies
+#        run: npm ci --legacy-peer-deps
+#      - name: Install frontend testing dependencies
+#        working-directory: bloglist-frontend
+#        run: npm install
+#      - name: Check style
+#        run: npm run lint
+#      - name: Build
+#        run: npm run build
+#      - name: Dom tests
+#        working-directory: bloglist-frontend
+#        run: npm run test
+#      - name: Run tests
+#        run: npm run test
+#      - name: debug print statements
+#        run: ls && cd node_modules && ls
+#      - name: e2e tests
+#        uses: cypress-io/github-action@v6
+#        with:
+#          build: npm run build
+#          start: npm run start:test
+#          command: cypress run
+#          wait-on: http://0.0.0.0:3000
 
 
 
@@ -59,17 +59,17 @@ jobs:
 #          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
 
-  deploy:
-    name: Deploy app
-    needs: [ simple_deployment_pipeline ]
-    if: ${{ github.event_name == 'push' && !contains(join(toJson(github.event.commits.*.message)), '# skip') }}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: superfly/flyctl-actions/setup-flyctl@master
-      - run: flyctl deploy --remote-only
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+#  deploy:
+#    name: Deploy app
+#    needs: [ simple_deployment_pipeline ]
+#    if: ${{ github.event_name == 'push' && !contains(join(toJson(github.event.commits.*.message)), '# skip') }}
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v3
+#      - uses: superfly/flyctl-actions/setup-flyctl@master
+#      - run: flyctl deploy --remote-only
+#        env:
+#          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
 #      - name: Test Failure
 #        uses: rjstone/discord-webhook-notify@v1
@@ -87,18 +87,40 @@ jobs:
 #          details: New tagged version successfully added!
 #          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
-  tag_release:
-    needs: [ simple_deployment_pipeline ]
-    if: ${{ github.event_name == 'push' && !contains(join(toJson(github.event.commits.*.message)), '# skip') }}
+#  tag_release:
+#    needs: [ simple_deployment_pipeline ]
+#    if: ${{ github.event_name == 'push' && !contains(join(toJson(github.event.commits.*.message)), '# skip') }}
+#    runs-on: ubuntu-20.04
+#    steps:
+#      - uses: actions/checkout@v3
+#      - uses: anothrNick/github-tag-action@1.64.0 # Don't use @master or @v1 unless you're happy to test the latest version
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # if you don't want to set write permissions use a PAT token
+#          WITH_V: false
+#          DEFAULT_BUMP: patch
+#          RELEASE_BRANCHES: main
+#          COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
+#          DRY_RUN: true
+
+
+  end_to_end:
+    name: End to end testing
     runs-on: ubuntu-20.04
+    env:
+      TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
+      NODE_ENV: "test"
+      SECRET: ${{ secrets.SECRET }}
     steps:
       - uses: actions/checkout@v3
-      - uses: anothrNick/github-tag-action@1.64.0 # Don't use @master or @v1 unless you're happy to test the latest version
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # if you don't want to set write permissions use a PAT token
-          WITH_V: false
-          DEFAULT_BUMP: patch
-          RELEASE_BRANCHES: main
-          COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
-          DRY_RUN: true
-
+      - uses: actions/setup-node@v3
+      - name: Install dependencies
+        run: npm install
+      - name: Install frontend testing dependencies
+        working-directory: bloglist-frontend
+        run: npm install
+      - uses: cypress-io/github-action@v6
+        with:
+          build: npm run build
+          start: npm run start:test
+          command: cypress run
+          wait-on: http://0.0.0.0:3000
