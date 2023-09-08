@@ -11,14 +11,13 @@ module.exports = {
   },
   "extends": [
     "eslint:recommended",
-    "plugin:react/recommended"
   ],
   "overrides": [
   ],
   "parserOptions": {
     "ecmaVersion": "latest"
   },
-  "plugins": ["react", "jest", "cypress"
+  "plugins": [ "jest", "cypress"
   ],
   "rules": {
     "indent": [
