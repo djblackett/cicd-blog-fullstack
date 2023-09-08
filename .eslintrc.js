@@ -3,17 +3,19 @@ module.exports = {
     "node": true,
     "commonjs": true,
     "es2021": true,
-    "jest": true
+    "jest": true,
+    "cypress/globals": true
   },
   "extends": [
     "eslint:recommended",
+    "plugin:react/recommended"
   ],
   "overrides": [
   ],
   "parserOptions": {
     "ecmaVersion": "latest"
   },
-  "plugins": [
+  "plugins": ["react", "jest", "cypress"
   ],
   "rules": {
     "indent": [
