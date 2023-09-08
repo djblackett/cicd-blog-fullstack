@@ -33,7 +33,7 @@ jobs:
         run: npm run test
       - name: Run tests
         working-directory: /
-        run: jest --verbose --runInBand --forceExit --detectOpenHandles
+        run: npm run test
         env:
           TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
           NODE_ENV: "test"
