@@ -37,6 +37,8 @@ jobs:
         run: npm run test
       - name: Run tests
         run: npm run test
+      - name: debug print statements
+        run: ls && cd node_modules && ls
       - name: e2e tests
         uses: cypress-io/github-action@v6
         with:
