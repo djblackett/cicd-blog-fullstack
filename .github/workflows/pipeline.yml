@@ -14,6 +14,10 @@ on:
 jobs:
   simple_deployment_pipeline:
     runs-on: ubuntu-20.04
+    env:
+      TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
+      NODE_ENV: "test"
+      SECRET: ${{ secrets.SECRET }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -33,10 +37,6 @@ jobs:
         run: npm run test
       - name: Run tests
         run: npm run test
-        env:
-          TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
-          NODE_ENV: "test"
-          SECRET: ${{ secrets.SECRET }}
       - name: e2e tests
         uses: cypress-io/github-action@v5
         with:
@@ -44,10 +44,6 @@ jobs:
           start: npm run start:test
           command: cypress run
           wait-on: http://0.0.0.0:3000
-        env:
-          TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
-          NODE_ENV: "test"
-          SECRET: ${{ secrets.SECRET }}
 
 
 
