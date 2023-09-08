@@ -2,14 +2,14 @@
 
 describe("Blog app", function() {
   beforeEach(function() {
-    cy.request("POST", "http://localhost:3000/api/testing/reset");
+    cy.request("POST", "http://0.0.0.0:3000/api/testing/reset");
     const user = {
       name: "Doctor Testerman",
       username: "testU",
       password: "testP"
     };
-    cy.request("POST", "http://localhost:3000/api/users/", user);
-    cy.visit("http://localhost:3000");
+    cy.request("POST", "http://0.0.0.0:3000/api/users/", user);
+    cy.visit("http://0.0.0.0:3000");
   });
 
 
@@ -100,7 +100,7 @@ describe("Blog app", function() {
         password: "testP2"
       };
 
-      cy.request("POST", "http://localhost:3000/api/users/", user);
+      cy.request("POST", "http://0.0.0.0:3000/api/users/", user);
 
       cy.get("#logout-button").click();
 
