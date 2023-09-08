@@ -44,9 +44,9 @@ jobs:
           NODE_ENV: "test"
           SECRET: ${{ secrets.SECRET }}
         with:
+          start: npm run start:test
           working-directory: bloglist-frontend
           command: npm run test:e2e
-          start: npm run start
           wait-on: http://0.0.0.0:3000
 
 
