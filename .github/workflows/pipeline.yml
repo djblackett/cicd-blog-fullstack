@@ -32,7 +32,10 @@ jobs:
         working-directory: bloglist-frontend
         run: npm run test
       - name: Run tests
-        run: npm run test
+        run: jest --verbose --runInBand --forceExit --detectOpenHandles
+        env:
+          TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
+          NODE_ENV: "test"
       - name: e2e tests
         uses: cypress-io/github-action@v5
         with:
