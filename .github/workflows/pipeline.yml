@@ -47,13 +47,13 @@ jobs:
 
 
 
-#      - name: Test Failure
-#        uses: rjstone/discord-webhook-notify@v1
-#        if: failure()
-#        with:
-#          severity: error
-#          details: Build and test pipeline failed
-#          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Test Failure
+        uses: rjstone/discord-webhook-notify@v1
+        if: failure()
+        with:
+          severity: error
+          details: Build and test pipeline failed
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
 
   deploy:
@@ -68,37 +68,38 @@ jobs:
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
           NODE_ENV: "production"
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
-#      - name: Test Failure
-#        uses: rjstone/discord-webhook-notify@v1
-#        if: failure()
-#        with:
-#          severity: error
-#          details: Deployment failed
-#          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-#
-#      - name: Test Success
-#        uses: rjstone/discord-webhook-notify@v1
-#        if: success()
-#        with:
-#          severity: info
-#          details: New tagged version successfully added!
-#          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Test Failure
+        uses: rjstone/discord-webhook-notify@v1
+        if: failure()
+        with:
+          severity: error
+          details: Deployment failed
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
-#  tag_release:
-#    needs: [ simple_deployment_pipeline ]
-#    if: ${{ github.event_name == 'push' && !contains(join(toJson(github.event.commits.*.message)), '# skip') }}
-#    runs-on: ubuntu-20.04
-#    steps:
-#      - uses: actions/checkout@v3
-#      - uses: anothrNick/github-tag-action@1.64.0 # Don't use @master or @v1 unless you're happy to test the latest version
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # if you don't want to set write permissions use a PAT token
-#          WITH_V: false
-#          DEFAULT_BUMP: patch
-#          RELEASE_BRANCHES: main
-#          COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
-#          DRY_RUN: true
+      - name: Test Success
+        uses: rjstone/discord-webhook-notify@v1
+        if: success()
+        with:
+          severity: info
+          details: New tagged version successfully added!
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+
+  tag_release:
+    needs: [ simple_deployment_pipeline ]
+    if: ${{ github.event_name == 'push' && !contains(join(toJson(github.event.commits.*.message)), '# skip') }}
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: anothrNick/github-tag-action@1.64.0 # Don't use @master or @v1 unless you're happy to test the latest version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # if you don't want to set write permissions use a PAT token
+          WITH_V: false
+          DEFAULT_BUMP: patch
+          RELEASE_BRANCHES: main
+          COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
+          DRY_RUN: true
 
 
 #  end_to_end:
