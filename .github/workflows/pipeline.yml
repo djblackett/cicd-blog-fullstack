@@ -23,12 +23,12 @@ jobs:
         run: npm ci
       - name: Check style
         run: npm run lint
-#      - name: Check style - Frontend    ** this won't help
-#        run: cd bloglist-frontend && npm run lint && cd ../
       - name: Build
         run: npm run build
       - name: Run tests
         run: npm run test
+      - name: Dom tests
+        run: cd bloglist-frontend && react-scripts test
       - name: e2e tests
         uses: cypress-io/github-action@v5
         with:
