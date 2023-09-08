@@ -45,8 +45,8 @@ jobs:
           SECRET: ${{ secrets.SECRET }}
         with:
           start: npm run start:test
-          working-directory: bloglist-frontend
-          command: npm run test:e2e
+#          working-directory: bloglist-frontend
+          command: cd bloglist-frontend && npm run test:e2e
           wait-on: http://0.0.0.0:3000
 
 
