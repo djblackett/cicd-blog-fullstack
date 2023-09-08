@@ -12,40 +12,40 @@ on:
     types: [ opened, synchronize ]
 
 jobs:
-#  simple_deployment_pipeline:
-#    runs-on: ubuntu-20.04
-#    env:
-#      TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
-#      NODE_ENV: "test"
-#      SECRET: ${{ secrets.SECRET }}
-#    steps:
-#      - uses: actions/checkout@v3
-#      - uses: actions/setup-node@v3
-#        with:
-#          node-version: '16'
-#      - name: Install dependencies
-#        run: npm ci --legacy-peer-deps
-#      - name: Install frontend testing dependencies
-#        working-directory: bloglist-frontend
-#        run: npm install
-#      - name: Check style
-#        run: npm run lint
-#      - name: Build
-#        run: npm run build
-#      - name: Dom tests
-#        working-directory: bloglist-frontend
-#        run: npm run test
-#      - name: Run tests
-#        run: npm run test
-#      - name: debug print statements
-#        run: ls && cd node_modules && ls
-#      - name: e2e tests
-#        uses: cypress-io/github-action@v6
-#        with:
+  simple_deployment_pipeline:
+    runs-on: ubuntu-20.04
+    env:
+      TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
+      NODE_ENV: "test"
+      SECRET: ${{ secrets.SECRET }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+      - name: Install frontend testing dependencies
+        working-directory: bloglist-frontend
+        run: npm install
+      - name: Check style
+        run: npm run lint
+      - name: Build
+        run: npm run build
+      - name: Dom tests
+        working-directory: bloglist-frontend
+        run: npm run test
+      - name: Run tests
+        run: npm run test
+      - name: debug print statements
+        run: ls && cd node_modules && ls
+      - name: e2e tests
+        uses: cypress-io/github-action@v6
+        with:
 #          build: npm run build
-#          start: npm run start:test
-#          command: cypress run
-#          wait-on: http://0.0.0.0:3000
+          start: npm run start:test
+          command: cypress run
+          wait-on: http://0.0.0.0:3000
 
 
 
