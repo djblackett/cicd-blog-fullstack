@@ -45,8 +45,7 @@ jobs:
           SECRET: ${{ secrets.SECRET }}
         with:
           start: npm run start:test
-#          working-directory: bloglist-frontend
-          command: cd bloglist-frontend && npm run test:e2e
+          command: cypress run
           wait-on: http://0.0.0.0:3000
 
 
