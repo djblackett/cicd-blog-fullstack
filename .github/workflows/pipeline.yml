@@ -29,7 +29,8 @@ jobs:
       - name: Build
         run: npm run build
       - name: Dom tests
-        run: cd bloglist-frontend && react-scripts test
+        working-directory: bloglist-frontend
+        run: npm run test
       - name: Run tests
         run: npm run test
       - name: e2e tests
