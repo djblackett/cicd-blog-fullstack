@@ -3,15 +3,6 @@
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-########
-########
-########
-# Check external harddrrive for old project files to possibly recover the old .env file
-
-
-
-
-
 app = "holy-cloud-7839"
 primary_region = "yyz"
 
@@ -22,9 +13,6 @@ primary_region = "yyz"
 [build]
   [build.args]
     NODE_VERSION = "16.20.2"
-
-#[deploy]
-#  release_command = "node index.js"
 
 
 [processes]
