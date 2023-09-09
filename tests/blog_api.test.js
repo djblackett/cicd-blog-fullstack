@@ -6,6 +6,7 @@ const User = require("../models/user");
 const api = supertest.agent(app);
 require("jest-expect-message");
 const jwt = require("jsonwebtoken");
+const { SECRET } = require("../utils/config");
 
 
 const initialBlogs = [
@@ -69,8 +70,8 @@ beforeEach(async () => {
     id: user2._id,
   };
 
-  token1 = jwt.sign(userForToken1, process.env.SECRET);
-  token2 = jwt.sign(userForToken2, process.env.SECRET);
+  token1 = jwt.sign(userForToken1, SECRET);
+  token2 = jwt.sign(userForToken2, SECRET);
 
   // add auth header to all requests
   api.auth(token1, { type: "bearer" });
