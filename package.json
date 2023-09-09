@@ -22,10 +22,7 @@
   "devDependencies": {
     "@flydotio/dockerfile": "^0.4.8",
     "eslint": "^8.28.0",
-
     "nodemon": "^2.0.20",
-
-
     "morgan": "^1.10.0",
     "eslint-plugin-react": "^7.33.2",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",

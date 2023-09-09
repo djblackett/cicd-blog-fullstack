@@ -8,6 +8,7 @@ const blogsRouter = require("./controllers/blogs");
 const middleware = require("./utils/middleware");
 const usersRouter = require("./controllers/users");
 const loginRouter = require("./controllers/login");
+const { NODE_ENV } = require("./utils/config");
 
 logger.info("connecting to", config.DATABASE_URL);
 
@@ -46,6 +47,10 @@ app.get("/health", (req, res) => {
 
 app.get("/version", (req, res) => {
   res.send("1"); // change this string to ensure a new version deployed
+});
+
+app.get("/env", (req, res) => {
+  res.json({ node_env: NODE_ENV });
 });
 
 app.use(express.static("build"));
