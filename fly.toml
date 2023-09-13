@@ -3,15 +3,6 @@
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-########
-########
-########
-# Check external harddrrive for old project files to possibly recover the old .env file
-
-
-
-
-
 app = "holy-cloud-7839"
 primary_region = "yyz"
 
